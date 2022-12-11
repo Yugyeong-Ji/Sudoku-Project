@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
 
                 int number = board.get(i, j);
 
-                if (Math.random() <= 0.9) {
+                if (Math.random() <= 0.8) {
                     numButton[i][j].setB(number);
                     numButton[i][j].generatedCustomButton = true;
                 }
@@ -115,10 +115,11 @@ public class MainActivity extends AppCompatActivity {
                     numButton[i][j].textView.setBackgroundResource(R.drawable.button_selector);
                 }
             }
+            TextView com = (TextView) findViewById(R.id.clear);
+            com.setVisibility(View.INVISIBLE);
         }
         });
         table.addView(resetButton);
-
 
 
         /* 누르면 새로운 보드가 생성*/
@@ -145,7 +146,7 @@ public class MainActivity extends AppCompatActivity {
                     for (int j = 0; j < 9; j++) {
                         int number = board.get(i, j);
 
-                        if (Math.random() <= 0.9) {
+                        if (Math.random() <= 0.8) {
                             numButton[i][j].setB(number);
                             numButton[i][j].generatedCustomButton = true;
                         }
@@ -367,15 +368,15 @@ public class MainActivity extends AppCompatActivity {
         int row = clickedCustomButton.row;
         int col = clickedCustomButton.col;
         int clickedValue = clickedCustomButton.value;
-
+        int flag = 0;
         //행, 열 검사
         for (int i = 0; i < 9; i++) {
             TableRow tableRow = (TableRow) table.getChildAt(row);
             CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(i);
             if (clickedValue == customButton.value) {
+                flag++;
                 customButton.setBackgroundResource(R.drawable.conflict);
                 customButton.setAlpha(0.99f);
-
             }
         }
 
@@ -384,6 +385,7 @@ public class MainActivity extends AppCompatActivity {
             TableRow tableRow = (TableRow) table.getChildAt(i);
             CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(col);
             if (clickedValue == customButton.value) {
+                flag++;
                 customButton.setBackgroundResource(R.drawable.conflict);
                 customButton.setAlpha(0.99f);
 
@@ -399,12 +401,18 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < 3; j++) {
                 CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(boxCol*3+j);
                 if (clickedValue == customButton.value) {
-
+                    flag++;
                     customButton.setBackgroundResource(R.drawable.conflict);
                     customButton.setAlpha(0.99f);
                 }
             }
         }
+        if (flag == 3) {
+            TableRow tableRow = (TableRow) table.getChildAt(row);
+            CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(col);
+            customButton.setBackgroundColor(Color.rgb(255, 255, 255));
+        }
+
     }
 
 
