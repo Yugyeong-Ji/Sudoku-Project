@@ -3,8 +3,7 @@ package com.example.sudokuproj;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.Typeface;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.view.Gravity;;
 import android.widget.FrameLayout;
 import android.widget.TableLayout;
 import android.widget.TableRow;
@@ -18,12 +17,14 @@ public class CustomButton extends FrameLayout {
     int row;
     int col;
     int value;
+    boolean check;
 //    int bRow;
 //    int bCol;
 
     TextView textView;
     TextView memoValue[][];
     boolean generatedCustomButton;
+    int [][] markButtonValue;
 
     public CustomButton(@NonNull Context context) {
         super(context);
@@ -54,7 +55,7 @@ public class CustomButton extends FrameLayout {
 
             for (int j = 0; j < 3; j++) {
                 memoValue[i][j] = new TextView(context);
-                memoValue[i][j].setTextSize(10);
+                memoValue[i][j].setTextSize(15);
                 memoValue[i][j].setTypeface(Typeface.DEFAULT_BOLD);
                 memoValue[i][j].setLayoutParams(layoutParams);
                 memoValue[i][j].setTextColor(Color.parseColor("#2F546C"));
@@ -80,12 +81,14 @@ public class CustomButton extends FrameLayout {
     }
 
 
-    public void setRandom(int a){
+    public void setB(int a){
         if(a==0) {
             this.value = 0;
+            this.check = false;
             textView.setText(null);
         }else {
             this.value=a;
+            this.check=true;
             textView.setText(String.valueOf(a));
             textView.setTextColor(Color.parseColor("#000000"));
         }
@@ -93,14 +96,19 @@ public class CustomButton extends FrameLayout {
 
     public void set(int a){
         if(a==0) {
-            this.value = 0;
-            textView.setText(null);
+            if(this.check == false) {
+                this.value = 0;
+                textView.setText(null);
+            }
         }else {
-            this.value=a;
-            textView.setText(String.valueOf(a));
-            textView.setTextColor(Color.parseColor("#0080FF"));
+            if(this.check ==false) {
+                this.value = a;
+                textView.setText(String.valueOf(a));
+                textView.setTextColor(Color.parseColor("#0080FF"));
+            }
         }
     }
+
     public int getValue() {
         return this.value;
     }

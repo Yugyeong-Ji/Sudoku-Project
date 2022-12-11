@@ -12,10 +12,13 @@ import android.widget.TableRow;
 import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ToggleButton;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class MainActivity extends AppCompatActivity {
     CustomButton clickedCustomButton=null;
     CustomButton[][] numButton;
+
     TableLayout numberPad;
     TableLayout dialogMemo;
     FrameLayout parentFrame;
@@ -80,58 +83,81 @@ public class MainActivity extends AppCompatActivity {
                 int number = board.get(i, j);
 
                 if (Math.random() <= 0.9) {
-                    numButton[i][j].setRandom(number);
+                    numButton[i][j].setB(number);
                     numButton[i][j].generatedCustomButton = true;
                 }
 
                 numButton[i][j].setLayoutParams(layoutParams);
                 tableRow.addView(numButton[i][j]);
+
             }
             table.addView(tableRow);
 
         }
 
-        //리셋버튼
-        /* 누르면 새로운 보드가 생성*/
         Button resetButton = new Button(this);
-        resetButton.setText("RESET");
-        resetButton.setBackgroundColor(Color.parseColor("#7FAEEC"));
+        resetButton.setText("Reset");
+        resetButton.setBackgroundColor(Color.parseColor("#BF9CCE"));
         resetButton.setTextColor(Color.parseColor("#FFFFFF"));
         resetButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+            public void onClick(View view){
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+                }
+            }
+            for (int i = 0; i < 9; i++) {
+                for (int j = 0; j < 9; j++) {
+                    if(numButton[i][j].check == false){
+                        numButton[i][j].set(0);
+                    }
+                    numButton[i][j].textView.setBackgroundResource(R.drawable.button_selector);
+                }
+            }
+        }
+        });
+        table.addView(resetButton);
+
+
+
+        /* 누르면 새로운 보드가 생성*/
+        Button newButton = new Button(this);
+        newButton.setText("New Game");
+        newButton.setBackgroundColor(Color.parseColor("#7FAEEC"));
+        newButton.setTextColor(Color.parseColor("#FFFFFF"));
+        newButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                BoardGenerator board = new BoardGenerator();
 
-                dialogMemo = (TableLayout) findViewById(R.id.memo);
-                dialogMemo.setVisibility(View.INVISIBLE);
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        int number = board.get(i, j);
-                        numButton[i][j].setRandom(number);
-                        numButton[i][j].generatedCustomButton = true;
-                        numButton[i][j].textView.setBackgroundResource(R.drawable.button_selector);
-                    }
-                }
-                for (int i = 0; i < 9; i++) {
-                    for (int j = 0; j < 9; j++) {
-                        if (Math.random() <= 0.1) {
-                            numButton[i][j].setRandom(0);
-                            numButton[i][j].generatedCustomButton = false;
-                        }
-                    }
-                }
                 //리셋과 동시에 메모했던 내용도 초기화
                 for (int i = 0; i < 3; i++) {
                     for (int j = 0; j < 3; j++) {
                         clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
                     }
                 }
-                TextView com = (TextView) findViewById(R.id.COMPLETE);
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        numButton[i][j].setB(0);
+                    }
+                }
+                for (int i = 0; i < 9; i++) {
+                    for (int j = 0; j < 9; j++) {
+                        int number = board.get(i, j);
+
+                        if (Math.random() <= 0.9) {
+                            numButton[i][j].setB(number);
+                            numButton[i][j].generatedCustomButton = true;
+                        }
+                    }
+                }
+
+                TextView com = (TextView) findViewById(R.id.clear);
                 com.setVisibility(View.INVISIBLE);
                 Toast.makeText(getApplicationContext(), "RESTART", Toast.LENGTH_SHORT).show();
             }
         });
-        table.addView(resetButton);
+        table.addView(newButton);
     }
 
     public void onClickReset(View view){
@@ -151,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum2(View view) {
@@ -159,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum3(View view) {
@@ -167,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum4(View view) {
@@ -175,7 +201,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum5(View view) {
@@ -183,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum6(View view) {
@@ -191,7 +217,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum7(View view) {
@@ -199,7 +225,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum8(View view) {
@@ -207,7 +233,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickNum9(View view) {
@@ -215,7 +241,7 @@ public class MainActivity extends AppCompatActivity {
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
         setConflict();
-        isComplete();
+        isClear();
 
     }
     public void onClickDelete(View view) {
@@ -334,7 +360,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     public void setConflict() {
 
         TableLayout table = (TableLayout) findViewById(R.id.tableLayout);
@@ -342,14 +367,12 @@ public class MainActivity extends AppCompatActivity {
         int row = clickedCustomButton.row;
         int col = clickedCustomButton.col;
         int clickedValue = clickedCustomButton.value;
-        int flag=0;
 
-        //행
+        //행, 열 검사
         for (int i = 0; i < 9; i++) {
             TableRow tableRow = (TableRow) table.getChildAt(row);
             CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(i);
             if (clickedValue == customButton.value) {
-                flag++;
                 customButton.setBackgroundResource(R.drawable.conflict);
                 customButton.setAlpha(0.99f);
 
@@ -361,14 +384,13 @@ public class MainActivity extends AppCompatActivity {
             TableRow tableRow = (TableRow) table.getChildAt(i);
             CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(col);
             if (clickedValue == customButton.value) {
-                flag++;
                 customButton.setBackgroundResource(R.drawable.conflict);
                 customButton.setAlpha(0.99f);
 
             }
         }
 
-        //같은 박스
+        //같은 박스 검사
         int boxRow = row / 3;
         int boxCol = col / 3;
 
@@ -377,22 +399,15 @@ public class MainActivity extends AppCompatActivity {
             for (int j = 0; j < 3; j++) {
                 CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(boxCol*3+j);
                 if (clickedValue == customButton.value) {
-                    flag++;
+
                     customButton.setBackgroundResource(R.drawable.conflict);
                     customButton.setAlpha(0.99f);
                 }
             }
         }
-
-        if (flag == 3) {
-            TableRow tableRow = (TableRow) table.getChildAt(row);
-            CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(col);
-            customButton.setBackgroundColor(Color.rgb(255, 255, 255));
-        }
-
     }
 
-    //conflict가 나지 않음
+
     public void unsetConflict() {
         TableLayout table = (TableLayout) findViewById(R.id.tableLayout);
 
@@ -435,7 +450,8 @@ public class MainActivity extends AppCompatActivity {
 
         }
     }
-    public void isComplete() {
+
+    public void isClear() {
         TableLayout table = (TableLayout) findViewById(R.id.tableLayout);
 
         int cnt=0;
@@ -452,7 +468,6 @@ public class MainActivity extends AppCompatActivity {
         for (int i = 0; i < 9; i++) {
             TableRow tableRow = (TableRow) table.getChildAt(i);
             for (int j = 0; j < 9; j++) {
-                CustomButton customButton = (CustomButton) tableRow.getVirtualChildAt(j);
                 int value = numButton[i][j].getValue();
                 if (value != 0)
                     cnt++;
@@ -489,13 +504,9 @@ public class MainActivity extends AppCompatActivity {
         }
         if (cnt == 81 && cnt1 == 9 && cnt2 == 9 && cnt3 == 9 && cnt4 == 9
                 && cnt5 == 9 && cnt6 == 9 && cnt7 == 9 && cnt8 == 9 && cnt9 == 9) {
-            TextView com = (TextView) findViewById(R.id.COMPLETE);
-            com.setVisibility(View.VISIBLE);
-//            for (int i = 0; i < 9; i++) {
-//                for (int j = 0; j < 9; j++) {
-//                    numButton[i][j].setEnabled(false);
-//                }
-//            }
+            TextView clear = (TextView) findViewById(R.id.clear);
+            clear.setVisibility(View.VISIBLE);
+
         }
     }
 
