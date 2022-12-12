@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
 
             for (int j = 0; j < 9; j++) {
                 numButton[i][j] = new CustomButton(this, i, j);
+
                 numButton[i][j].setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -67,6 +68,7 @@ public class MainActivity extends AppCompatActivity {
                         numberPad.setVisibility(View.VISIBLE);
                         dialogMemo.setVisibility(View.INVISIBLE);
                         valueMark = clickedCustomButton.value;
+                        isClear();
                     }
                 });
                 numButton[i][j].setOnLongClickListener(new View.OnLongClickListener() {
@@ -121,6 +123,13 @@ public class MainActivity extends AppCompatActivity {
         });
         table.addView(resetButton);
 
+        LinearLayout.LayoutParams newB = new LinearLayout.LayoutParams(
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
+        );
+
+        newB.setMargins(0,8,0,14);
+        resetButton.setLayoutParams(newB);
 
         /* 누르면 새로운 보드가 생성*/
         Button newButton = new Button(this);
@@ -161,19 +170,13 @@ public class MainActivity extends AppCompatActivity {
         table.addView(newButton);
     }
 
-    public void onClickReset(View view){
-        clickedCustomButton.set(0);
+
+    public void onClickNum1(View view) {
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
                 clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
             }
         }
-        setDialogMemo();
-        unsetConflict();
-        setConflict();
-    }
-
-    public void onClickNum1(View view) {
         clickedCustomButton.set(1);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -182,6 +185,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum2(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(2);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -190,6 +198,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum3(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(3);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -198,6 +211,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum4(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(4);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -206,6 +224,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum5(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(5);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -214,6 +237,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum6(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(6);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -222,6 +250,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum7(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(7);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -230,6 +263,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum8(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(8);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
@@ -238,6 +276,11 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onClickNum9(View view) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                clickedCustomButton.memoValue[i][j].setVisibility(View.INVISIBLE);
+            }
+        }
         clickedCustomButton.set(9);
         numberPad.setVisibility(View.INVISIBLE);
         unsetConflict();
